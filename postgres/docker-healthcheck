@@ -1,0 +1,21 @@
+#!/bin/bash
+set -eo pipefail
+
+user="${POSTGRES_USER:-postgres}"
+
+export PGPASSWORD="${POSTGRES_PASSWORD:-}"
+
+args=(
+	# force postgres to not use the local unix socket (test "external" connectibility)
+	--host "$(hostname --ip-address || echo '127.0.0.1')"
+	--username "$user"
+	--quiet --no-align --tuples-only
+)
+
+if select="$(echo 'SELECT 1' | psql "${args[@]}")" && [ "$select" = '1' ]; then
+	exit 0
+fi
+
+# If the probe returns 2 ("starting") when the container has already moved out of the "starting" state then it is treated as "unhealthy" instead.
+# https://github.com/docker/docker/blob/dcc65376bac8e73bb5930fce4cddc2350bb7baa2/docs/reference/builder.md#healthcheck
+exit 2
