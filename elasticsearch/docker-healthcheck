@@ -11,6 +11,4 @@ if health="$(curl -fsSL "http://$host:9200/_cat/health?h=status")"; then
 	echo >&2 "unexpected health status: $health"
 fi
 
-# If the probe returns 2 ("starting") when the container has already moved out of the "starting" state then it is treated as "unhealthy" instead.
-# https://github.com/docker/docker/blob/dcc65376bac8e73bb5930fce4cddc2350bb7baa2/docs/reference/builder.md#healthcheck
-exit 2
+exit 1
