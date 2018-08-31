@@ -18,8 +18,14 @@ args=(
 	--silent
 )
 
-if select="$(echo 'SELECT 1' | mysql "${args[@]}")" && [ "$select" = '1' ]; then
-	exit 0
+if command -v mysqladmin &> /dev/null; then
+	if mysqladmin "${args[@]}" ping > /dev/null; then
+		exit 0
+	fi
+else
+	if select="$(echo 'SELECT 1' | mysql "${args[@]}")" && [ "$select" = '1' ]; then
+		exit 0
+	fi
 fi
 
 exit 1
