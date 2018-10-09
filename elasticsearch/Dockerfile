@@ -1,4 +1,4 @@
-FROM elasticsearch
+FROM elasticsearch:5
 
 COPY docker-healthcheck /usr/local/bin/
 
