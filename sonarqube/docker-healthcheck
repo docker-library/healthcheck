@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# A Sonarqube container is considered healthy if the status is UP, DB_MIGRATION_NEEDED or DB_MIGRATION_RUNNING
+# status about migration are added to prevent the node to be kill while sonarqube is updating himself.
+host="$(hostname --ip-address || echo '127.0.0.1')"
+
+if curl -Ss http://${host}:9000/api/system/status | grep -q -e '"status":"UP"' -e '"status":"DB_MIGRATION_NEEDED"' -e '"status":"DB_MIGRATION_RUNNING"'; then
+	exit 0
+fi
+
+exit 1
