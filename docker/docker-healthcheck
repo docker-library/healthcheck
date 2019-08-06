@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+host="$(hostname -i || echo '127.0.0.1')"
+if [ -d "$DOCKER_TLS_CERTDIR" ]; then
+	export DOCKER_HOST="tcp://$host:2376"
+else
+	export DOCKER_HOST="tcp://$host:2375"
+fi
+
+docker-entrypoint.sh version > /dev/null || exit 1
