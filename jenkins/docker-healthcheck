@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+host="$(hostname --ip-address)"
+code="$(curl -sL -w "%{http_code}" "$host:8080/login" -o /dev/null --max-time 15)"
+
+if [[ "$code" == "200" ]]; then
+    exit 0
+fi
+
+exit 1
