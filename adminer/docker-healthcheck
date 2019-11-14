@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eo pipefail
+
+host="$(hostname -i)"
+
+if curl -sS "http://$host:8080"; then
+    exit 0
+fi
+
+exit 1
