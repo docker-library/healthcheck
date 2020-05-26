@@ -4,7 +4,7 @@
 # status about migration are added to prevent the node to be kill while sonarqube is updating himself.
 host="$(hostname -i || echo '127.0.0.1')"
 
-if curl -Ss http://${host}:9000/api/system/status | grep -q -e '"status":"UP"' -e '"status":"DB_MIGRATION_NEEDED"' -e '"status":"DB_MIGRATION_RUNNING"'; then
+if wget -qO- http://${host}:9000/api/system/status | grep -q -e '"status":"UP"' -e '"status":"DB_MIGRATION_NEEDED"' -e '"status":"DB_MIGRATION_RUNNING"'; then
 	exit 0
 fi
 
