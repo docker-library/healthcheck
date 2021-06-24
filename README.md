@@ -1,9 +1,8 @@
 # `HEALTHCHECK`
 
-This is an example set of prototype images (available under https://hub.docker.com/u/healthcheck) for enabling [`HEALTHCHECK`](https://github.com/docker/docker/issues/21142) behavior in the official images.
+This is an example set of prototypes for enabling [`HEALTHCHECK`](https://github.com/docker/docker/issues/21142) behavior in select official images.
 
-These images are not maintained and are only provided as a reference in implementing your own `HEALTHCHECK`.
+This repository is not actively maintained and only exists as a reference in implementing your own `HEALTHCHECK` which meets your particular needs more accurately than these generic examples possibly could. Resulting images are **not** actively built and pushed to a Docker Registry (and the `FROM` lines are likely even outdated).
 
 See [the `HEALTHCHECK` FAQ entry](https://github.com/docker-library/faq#healthcheck) for the rationale for why these don't get added to the official images directly.
 
-See [`github.com/docker-library/oi-janky-groovy/healthcheck-pipeline.groovy`](https://github.com/docker-library/oi-janky-groovy/blob/master/healthcheck-pipeline.groovy) for the script which builds and pushes these to the [`healthcheck` namespace on Docker Hub](https://hub.docker.com/u/healthcheck/).
