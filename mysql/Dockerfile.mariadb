@@ -1,5 +1,5 @@
 FROM mariadb
 
-COPY docker-healthcheck /usr/local/bin/
+ENV MARIADB_MYSQL_LOCALHOST_USER=1
 
-HEALTHCHECK CMD ["docker-healthcheck"]
+HEALTHCHECK CMD ["/usr/local/bin/healthcheck.sh", "--su=mysql", "--innodb_initialized"]
