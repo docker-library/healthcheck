@@ -3,8 +3,17 @@ set -eo pipefail
 
 host="$(hostname --ip-address || echo '127.0.0.1')"
 
-if mongo --quiet "$host/test" --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'; then
-	exit 0
-fi
+# mongo for version <= 4.4
+# mongosh for version >= 5.0
+for cmd in mongosh mongo; do
+	if ! command -v "$cmd" > /dev/null; then
+		continue;
+	fi
+
+	if "$cmd" --quiet "$host/test" --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'; then
+		exit 0
+	fi
+
+done
 
 exit 1
